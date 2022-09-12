@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Video</title>
+    <style>table,
+    td {
+        border: 1px solid #333;
+        margin-top: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 25px;
+    }
+
+    thead,
+    tfoot {
+        background-color: #e8e5e5;
+        color: #344712;
+    }
+    </style>
+    <style>
+        table, th, td {
+            border: 1px solid #1e1818;
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Video Name</th>
+        <th scope="col">Link</th>
+        <th scope="col">Lesson</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="video:${allVideos}">
+        <th th:text="${video.id}"></th>
+        <th th:text="${video.videoName}"></th>
+        <th th:text="${video.link}"></th>
+        <th th:text="${video.getLesson().getLessonName()}"></th>
+        <td>
+            <a th:href="@{/videos/updateVideo/{videoId}(videoId=${video.id})}">
+                <button style="height: 40px; width: 80px; background-color:#1111bb;">update</button>
+            </a>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/videos/{lessonId}/{videoId}/deleteVideo(lessonId=${lessonId},videoId=${video.getId()})}">
+            <input type="submit" value="delete" style="height: 40px; width: 80px; background-color:#cc1222;"/></form></td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/videos/{lessonId}/newVideo(lessonId=${lessonId})}">
+    <button style="text-align:center; margin-top:200px; font-size: 30px;">Add Video</button>
+</a>
+</body>
+</html>
+
+

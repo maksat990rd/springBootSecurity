@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <style>table,
+    td {
+        border: 1px solid #333;
+        margin-top: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 25px;
+    }
+
+    thead,
+    tfoot {
+        background-color: #e8e5e5;
+        color: #344712;
+    }
+    </style>
+    <style>
+        table, th, td {
+            border: 1px solid #1e1818;
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+
+
+<table class="table table-bordered ">
+    <thead class="table-white">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone number</th>
+        <th scope="col">Study format</th>
+        <th scope="col">Assign course</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody class="table-success">
+    <tr th:each="student : ${studentAtr}">
+        <td th:text="${student.id}"></td>
+        <td th:text="${student.firstName}"></td>
+        <td th:text="${student.lastName}"></td>
+        <td th:text="${student.email}"></td>
+        <td th:text="${student.phoneNumber}"></td>
+        <td th:text="${student.studyFormat}"></td>
+
+        <td>
+            <form th:method="POST"
+                  th:action="@{/students/{companyId}/{studentId}/saveAssign(companyId=${coursId}, studentId=${student.getId()})}">
+                <select name="course" class="form-select form-select-sm"  aria-label=".form-select-sm example"
+                        th:object="${course}"
+                        th:field="*{id}">
+                    <option th:each="course : ${studentsC}"
+                            th:value="${course.id}"
+                            th:text="${course.courseName}">
+                    </option>
+                </select>
+                <input type="submit" value="assign" style="height: 30px;width: 60px; background: azure"/>
+            </form>
+        </td>
+        <td>
+            <a th:href="@{/students/updateStudent/{studentId}(studentId=${student.getId()})}">
+                <button style="height: 40px; width: 80px; background-color:whitesmoke;">update</button>
+            </a>
+        </td>
+        <td>
+            <form th:method="DELETE"
+                  th:action="@{/students/{companyId}/{studentId}/delete(companyId=${companyId},studentId=${student.getId()})}">
+                <button style="height: 40px; width: 80px; background-color:whitesmoke;">delete</button>
+                </a>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br><br><br><br>
+<div style="text-align:center; ">
+    <a th:href="@{/students/{companyId}/addStudent(companyId=${companyId})}">
+<!--        <a th:href="@{/courses/{id}/addCourse(id=${companyId})}">-->
+
+        <button style="font-size:30px;">Add student</button>
+    </a></div>
+</body>
+</html>

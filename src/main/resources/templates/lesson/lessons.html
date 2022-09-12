@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson</title>
+    <style>table,
+    td {
+        border: 1px solid #333;
+        margin-top: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 25px;
+    }
+
+    thead,
+    tfoot {
+        background-color: #e8e5e5;
+        color: #344712;
+    }
+    </style>
+    <style>
+        table, th, td {
+            border: 1px solid #1e1818;
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<table class="table table-bordered ">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Lesson name</th>
+        <th scope="col">update</th>
+        <th scope="col">delete</th>
+        <th scope="col">task</th>
+        <th scope="col">video</th>
+
+    </tr>
+    </thead>
+    <tbody class="table-header">
+    <!--    //changed , foreach -->
+    <tr th:each="lesson:${allLessons}">
+        <td th:text="${lesson.id}"></td>
+        <td th:text="${lesson.lessonName}"></td>
+
+
+        <td><a th:href="@{/lessons/updateLesson/{lessonId}(lessonId=${lesson.getId()})}">
+            <button style="height: 40px; width: 80px; background-color:blue;">Update</button>
+        </a>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/lessons/{courseId}/{lessonId}/delete(courseId=${courseId},lessonId=${lesson.getId()})}">
+                <input type="submit" value="Delete" style="height: 40px; width: 80px; background-color:darkorange;"/>
+            </form>
+        </td>
+        <td>
+            <a th:href="@{/tasks/allTasks/{lessonId}(lessonId=${lesson.getId()})}">
+                <button style="height: 40px; width: 80px; background-color:#4c8a2c;">Task</button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/videos/allVideos/{lessonId}(lessonId=${lesson.getId()})}">
+                <button style="height: 40px; width: 80px; background-color:#4c8a2c;">Video</button>
+            </a>
+        </td>
+<!--        <td>-->
+<!--            <form th:href="@{/tasks/allTasks/{lessonId}(lessonId=${lesson.id})}">-->
+<!--                <input type="submit" value="task" style="height: 40px; width: 80px; background-color:darkorange;"/>-->
+<!--            </form>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--            <form th:href="@{/videos/allVideos/{lessonId}(lessonId=${lesson.getId()})-->
+<!--            }">-->
+<!--                <input type="submit" value="video" style="height: 40px; width: 80px; background-color:darkorange;"/>-->
+<!--            </form>-->
+<!--        </td>-->
+    </tr>
+    </tbody>
+</table>
+<br><br><br>
+
+<div style="text-align: center">
+    <a th:href="@{/lessons/{courseId}/addLesson(courseId=${courseId})}">
+        <button style="font-size: 30px;"> Add Lesson</button>
+    </a>
+</div>
+

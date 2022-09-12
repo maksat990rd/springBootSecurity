@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Companies</title>
+    <style>table,
+    td {
+        border: 1px solid #333;
+        margin-top: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 25px;
+    }
+
+    thead,
+    tfoot {
+        background-color: #aab1c0;
+        color: #344712;
+    }
+    </style>
+    <style>
+        table, th, td {
+            border: 1px solid #1e1818;
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout">
+</form>
+<table class="table table-bordered ">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Company name</th>
+        <th scope="col">Located country</th>
+        <th scope="col">Courses</th>
+        <th scope="col">Instructor</th>
+        <th scope="col">Student</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody class="table-success">
+<!--    //changed , foreach -->
+    <tr th:each="company:${companies}">
+        <td th:text="${company.getId()}"></td>
+        <td th:text="${company.companyName}"></td>
+        <td th:text="${company.locatedCountry}"></td>
+        <td>
+            <a th:href="@{/courses/courses/{id}(id=${company.getId()})}">
+                <button style="height: 40px; width: 80px; background-color:#4c8a2c;">course</button>
+            </a>
+        </td>
+
+        <td>
+            <a th:href="@{/instructors/instructors/{id}(id=${company.getId()})}">
+                <button style="height: 40px; width: 80px; background-color:#4c8a2c;">instructor</button>
+            </a>
+        </td>
+
+        <td>
+            <a th:href="@{/students/students/{companyId}(companyId=${company.getId()})}">
+                <button style="height: 40px; width: 80px; background-color:#4c8a2c;">student</button>
+            </a>
+        </td>
+
+
+        <td><a th:href="@{/companies/update/{id}(id=${company.getId()})}">
+            <button style="height: 40px; width: 80px; background-color:#e10f0f;">update</button>
+        </a>
+        </td>
+
+
+        <td><form th:method="DELETE" th:action="@{/companies/{id}(id=${company.getId()})}">
+            <input type="submit" value="delete" style="height: 40px; width: 80px; background-color:darkorange;"/></form>
+        </td>
+
+    </td>
+    </tr>
+    </tbody>
+</table>
+<br><br><br><br>
+<input style=" display: block; margin:auto; font-size:30px;" type="button" value="Add company"
+       onclick="window.location.href = 'companies/addCompany'">
+</body>
+</html>
